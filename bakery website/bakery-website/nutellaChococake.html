@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Order Nutella Chocolate Cake</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Tajawal&display=swap" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+</head>
+
+<body ng-app="">
+    <div class="main-menu">
+        <div class="logo">
+            <img src="img/logo.png" />
+        </div>
+        <div class="navbar">
+            <a href="./index.html">Home</a>
+            <a href="./index.html">About</a>
+            <a href="./index.html">Products</a>
+            <a href="./index.html">Blogs</a>
+            <a href="./index.html">Gallery</a>
+            <a href="./index.html">Contact</a>
+            <a href="./login.html">Login</a>
+            <a href="./signup.html">Signup</a>
+        </div>
+    </div>
+    <section class="home-bg">
+        <div>
+            <img src="img/plan2.png" style="width:500px;height:400px;margin-top:400px" />
+            <h1>Nutella Chocolate Cake</h1>
+            <h2>MRP. 1299/-</h2>
+        </div>
+        <form action="/order" method="POST" name="orderNC">
+            <div class="container">
+                <h1>Order</h1>
+                <p>Please fill in this form to order a Nutella Chocolate Cake.</p>
+                <hr />
+                <label for="item"><b>Item</b></label>
+                <input type="text" value="Nutella-Chocalate-Cake" name="item" readonly/>
+                <label for="price"><b>Price</b></label>
+                <input type="text" value="Rs. 1299" name="price" readonly />
+                <label for="amount"><b>Amount</b></label>
+                <input type="text" placeholder=" Enter amount" name="amount" required />
+                <label for="name"><b>Name</b></label>
+                <input type="text" placeholder="Enter Name" name="name" required />
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="Enter Email" name="email" required ng-model="email" />
+                <div class="err-angular" ng-show="signupForm.email.$dirty && signupForm.email.$invalid">
+                    <span ng-show="signupForm.email.$error.required || signupForm.email.$pristine.required">Email is required.</span>
+                    <span ng-show="signupForm.email.$error.email">Invalid email</span>
+                </div>
+                <label for="ph"><b>Phone Number</b></label>
+                <input type="text" placeholder="Enter Phone number" name="ph" required />
+                <div class="err" id="ph-err">
+                    Phone Number should be only digits and of 10 characters.
+                </div>
+                <div class="err" id="ph-missing">
+                    Phone Number is required.
+                </div>
+                <label for="add"><b>Address</b></label>
+                <input type="text" placeholder="Enter Address" name="add" required />
+                <div class="err" id="add-missing-2">
+                    Address needs to be entered.
+                </div>
+                <label for="pin"><b>Pin Code</b></label>
+                <input type="text" placeholder="Enter Pin Code" name="pin" required />
+                <div class="err" id="pin-err">
+                    Pin Code should be only digits and of 6 characters.
+                </div>
+                <div class="err" id="pin-missing">
+                    Pin Code is required.
+                </div>
+                <hr />
+                <button type="submit" class="registerbtn" ng-disabled="signupForm.email.$dirty && signupForm.email.$invalid">
+          Confirm Order
+        </button>
+            </div>
+        </form>
+    </section>
+    <script>
+        $(document).ready(function() {
+            let flag = true;
+
+            $("input[name=ph]").on("input", function() {
+                let ph =
+                    $("input[name=ph]").val();
+                const phone_regex =
+                    /^[0-9]{10}$/;
+                if (ph === "") {
+                    flag = false;
+                    $("#ph-missing").css("display", "inline-block");
+                    $("#ph-err").css("display", "none");
+                } else if (!phone_regex.test(ph)) {
+                    flag = false;
+                    $("#ph-missing").css("display", "none");
+                    $("#ph-err").css("display", "inline-block");
+                } else {
+                    $("#ph-missing").css("display", "none");
+                    $("#ph-err").css("display", "none");
+                }
+            });
+            $("input[name=pin]").on("input", function() {
+                let pin =
+                    $("input[name=pin]").val();
+                const pin_regex =
+                    /^[0-9]{6}$/;
+                if (pin === "") {
+                    flag = false;
+                    $("#pin-missing").css("display", "inline-block");
+                    $("#pin-err").css("display", "none");
+                } else if (!pin_regex.test(pin)) {
+                    flag = false;
+                    $("#pin-missing").css("display", "none");
+                    $("#pin-err").css("display", "inline-block");
+                } else {
+                    $("#pin-missing").css("display", "none");
+                    $("#pin-err").css("display", "none");
+                }
+            });
+            $("input[name=add]").on("input", function() {
+                let add =
+                    $("input[name=add]").val();
+                if (add === "") {
+                    flag = false;
+                    $("#add-missing-2").css("display", "inline-block");
+                } else {
+                    $("#add-missing-2").css("display", "none");
+                }
+            });
+            $("form").on("submit", function(event) {
+                let flag = true;
+                if (!flag) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
